@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource #使用druid数据源，替换C3P0
+    url: jdbc:mysql://39.108.150.61:3306/haojixing
+    username: root
+    password: a815634a1936c7b2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
