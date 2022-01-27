@@ -1,15 +1,22 @@
 package com.codehuan;
 
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.codehuan.mapper.UserMapper;
+import com.codehuan.pojo.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class BaishijieApplicationTests {
@@ -72,4 +79,30 @@ class BaishijieApplicationTests {
                 .execute();
 
     }
+
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Test
+    public void testPage() {
+
+
+        // 分页查第一页
+        Page<User> page = new Page<>(1, 2);
+        Page<User> pageResult = userMapper.testPage(page);
+        System.out.println(JSON.toJSONString(pageResult));
+        // 分页查第二页
+        page = new Page<>(2, 2);
+        pageResult = userMapper.testPage(page);
+        System.out.println(JSON.toJSONString(pageResult));
+    }
+
+    @Test
+    public void testPage2() {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        Page<Map<String, Object>> mapPage = userMapper.selectMapsPage(new Page<>(1, 2), queryWrapper);
+        System.out.println(JSON.toJSONString(mapPage));
+    }
+
 }
